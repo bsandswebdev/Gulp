@@ -37,7 +37,10 @@ gulp.task('less', function () {
 
 //BROWSER SYNC
 gulp.task('browser-sync', function() {
-    browserSync.init(['css/theme.css'],['./*.html'] {        // files to inject
+    browserSync.init(['css/theme.css'], {        // files to inject
+        /*server: {
+            baseDir: "./"
+        }*/
         proxy: "localhost:8888"
     });
 });
@@ -65,11 +68,11 @@ gulp.task('watch', function() {
     
     gulp.watch('less/*', ['less']);
     gulp.watch('css/theme.css.map', ['less']);
-    gulp.watch('css', ['minify-css']);
     gulp.watch('css/theme.css', ['autoprefixer']);
+    gulp.watch('css', ['minify-css']);
     gulp.watch('images/original', ['images']);
 });
 
 // Default Task
-gulp.task('default', ['browser-sync', 'less', 'watch' ]);
+gulp.task('default', ['browser-sync', 'watch' ]);
 
