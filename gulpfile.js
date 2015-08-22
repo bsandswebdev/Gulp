@@ -37,7 +37,7 @@ gulp.task('less', function () {
 
 //BROWSER SYNC
 gulp.task('browser-sync', function() {
-    browserSync.init(['css/theme.css'], {        // files to inject
+    browserSync.init(['css/theme.css', 'index.html'], {        // files to inject
         /*server: {
             baseDir: "./"
         }*/
