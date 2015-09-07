@@ -37,7 +37,7 @@ gulp.task('less', function () {
 
 //BROWSER SYNC
 gulp.task('browser-sync', function() {
-    browserSync.init(['css/theme.css', 'index.html'], {        // files to inject
+    browserSync.init(['css/theme.min.css', 'index.html'], {        // files to inject
         /*server: {
             baseDir: "./"
         }*/
@@ -65,12 +65,11 @@ gulp.task('autoprefixer', function () {
 
 //Watch Files For Changes
 gulp.task('watch', function() {
-    
+    //gulp.watch('images/original', ['images']);
     gulp.watch('less/*', ['less']);
     gulp.watch('css/theme.css.map', ['less']);
     gulp.watch('css/theme.css', ['autoprefixer']);
-    gulp.watch('css', ['minify-css']);
-    gulp.watch('images/original', ['images']);
+    gulp.watch('css/theme.css', ['minify-css']);
 });
 
 // Default Task
