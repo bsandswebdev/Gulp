@@ -1,8 +1,9 @@
-//Gulp
+//GULP
 var gulp = require('gulp');
 
-//Plugins
-var less = require('gulp-less-sourcemap'); //npm install gulp-less gulp-sourcemaps must also be installed
+//PLUGINS
+var sass = require('gulp-sass');
+var sourcemaps = require('gulp-sourcemaps');
 var rename = require('gulp-rename');
 var minifyCss = require('gulp-minify-css');
 var imagemin = require('gulp-imagemin');
@@ -10,6 +11,20 @@ var pngquant = require('imagemin-pngquant');
 var path = require('path');
 var browserSync = require('browser-sync');
 var autoprefixer = require('gulp-autoprefixer');
+
+//VARIABLES
+
+//var input = './scss/**/*.scss';  /*inputs all .scss files*/
+var input = './scss/theme.scss';
+var output = './css';
+var sassOptions = {
+	errLogToConsole: true,
+  	outputStyle: 'expanded'
+};
+var autoPrefixerOptions = {
+	browsers: ['last 2 versions'],
+    cascade: true
+}
 
 //IMAGEMIN
 gulp.task('images', function () {
@@ -24,15 +39,15 @@ gulp.task('images', function () {
         .pipe(gulp.dest('images/optimized'));
 });
 
-//LESS + SOURCEMAPS
-gulp.task('less', function () {
-  gulp.src('less/theme.less')
-    .pipe(less({
-        sourceMap: {
-            sourceMapRootpath: 'less' // Optional absolute or relative path to your LESS files 
-        }
-    }))
-    .pipe(gulp.dest('css'));
+//SAAS + SOURCEMAPS + AUTOPREFIXER
+gulp.task('sass', function () {
+  return gulp
+    .src(input)
+    .pipe(sourcemaps.init())
+    .pipe(sass(sassOptions).on('error', sass.logError))
+    .pipe(sourcemaps.write())
+    .pipe(autoprefixer(autoPrefixerOptions))
+    .pipe(gulp.dest(output));
 });
 
 //BROWSER SYNC
@@ -53,25 +68,14 @@ gulp.task('minify-css', function() {
     .pipe(gulp.dest('css'));
 });
 
-//AUTOPREFIXER
-gulp.task('autoprefixer', function () {
-    return gulp.src('css/theme.css')
-        .pipe(autoprefixer({
-            browsers: ['last 2 versions'],
-            cascade: true
-        }))
-        .pipe(gulp.dest('css'));
-});
-
 //Watch Files For Changes
 gulp.task('watch', function() {
-    //gulp.watch('images/original', ['images']);
-    gulp.watch('less/*', ['less']);
-    gulp.watch('css/theme.css.map', ['less']);
-    gulp.watch('css/theme.css', ['autoprefixer']);
+    gulp.watch('images/original', ['images']);
+    gulp.watch('scss/*', ['sass']);
+    gulp.watch('css/theme.css.map', ['sass']);
     gulp.watch('css/theme.css', ['minify-css']);
 });
 
 // Default Task
-gulp.task('default', ['browser-sync', 'watch' ]);
+gulp.task('default', ['browser-sync', 'sass', 'watch' ]);
 
