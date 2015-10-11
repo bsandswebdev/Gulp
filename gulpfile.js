@@ -13,7 +13,7 @@ var pngquant = require('imagemin-pngquant');
 
 //BROWSER SYNC
 gulp.task('browser-sync', function() {
-    browserSync.init(['css/theme.css', 'index.html'], {      		// Files to inject
+    browserSync.init(['css/theme.css', 'index.html'], {      			// Files to inject
         /*server: {
             baseDir: "./"
         }*/
@@ -22,7 +22,7 @@ gulp.task('browser-sync', function() {
 });
 
 //SAAS + SOURCEMAPS + AUTOPREFIXER + MINIFY CSS
-var input = './scss/theme.scss'; //var input = './scss/**/*.scss';  //Option to input all .scss files instead of import theme.scss
+var input = './scss/theme.scss'; //var input = './scss/**/*.scss';  	        //Option to input all .scss files instead of import theme.scss
 var output = './css';
 var sassOptions = {errLogToConsole: true, outputStyle: 'expanded'};
 var autoPrefixerOptions = {browsers: ['last 2 versions'], cascade: true}
@@ -32,12 +32,12 @@ gulp.task('sass', function () {
     .src(input)
     .pipe(sourcemaps.init())
     .pipe(sass(sassOptions).on('error', sass.logError))				//Sass options      
-    .pipe(sourcemaps.write())										//Sourcemaps							    
-    .pipe(autoprefixer(autoPrefixerOptions))						//Autoprefixer			   
-    .pipe(gulp.dest(output))										//Output theme.css
-	.pipe(minifyCss())												//Minify CSS 										
-    .pipe(rename('theme.min.css'))									//Rename to .min file						
-    .pipe(gulp.dest('css'));										//Output minified CSS file
+    .pipe(sourcemaps.write())							//Sourcemaps							    
+    .pipe(autoprefixer(autoPrefixerOptions))					//Autoprefixer			   
+    .pipe(gulp.dest(output))							//Output theme.css
+    .pipe(minifyCss())								//Minify CSS 										
+    .pipe(rename('theme.min.css'))						//Rename to .min file						
+    .pipe(gulp.dest('css'));							//Output minified CSS file
 });
 
 //IMAGEMIN
