@@ -13,7 +13,6 @@ var browserSync = require('browser-sync');
 var autoprefixer = require('gulp-autoprefixer');
 
 //VARIABLES
-
 //var input = './scss/**/*.scss';  /*inputs all .scss files*/
 var input = './scss/theme.scss';
 var output = './css';
