@@ -24,7 +24,13 @@ gulp.task('browser-sync', function() {
 //SAAS + SOURCEMAPS + AUTOPREFIXER + MINIFY CSS
 var input = './scss/theme.scss'; //var input = './scss/**/*.scss';  	        //Option to input all .scss files instead of import theme.scss
 var output = './css';
-var sassOptions = {errLogToConsole: true, outputStyle: 'expanded'};
+var sassOptions = {
+	errLogToConsole: false,
+	onError: function(err) {
+		return notify().write(err);
+	},
+	outputStyle: 'expanded'
+};
 var autoPrefixerOptions = {browsers: ['last 2 versions'], cascade: true}
 
 gulp.task('sass', function () {
